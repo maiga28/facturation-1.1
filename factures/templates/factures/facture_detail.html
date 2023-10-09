@@ -1,0 +1,69 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}
+  {{payment.id}}
+{% endblock %}
+
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Détails de la Facture</h4>
+          </div>
+          <div class="card-body">
+              <div class="table-responsive">
+                <table class="table tablesorter">
+                    <thead class="text-primary">
+                        <tr>
+                            <th>Numéro de facture</th>
+                            <th>Date d'émission</th>
+                            <th></th> <!-- Vous pouvez ajouter d'autres informations de la facture ici si nécessaire -->
+                            <th class="text-center">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Facture # {{ factures.numero }}</td>
+                            <td>{{ factures.date_emission }}</td>
+                            <td></td> <!-- Ajoutez ici d'autres détails de la facture si nécessaire -->
+                            <td class="text-center">{{ payment.amount }} GNF</td> <!-- Assurez-vous que 'payment.amount' contient le montant correct -->
+                        </tr>
+                        {% if payments %}
+                            {% for payment in payments %}
+                                <tr>
+                                    <td>Date du paiement : {{ payment.date|date:"Y-m-d" }}</td> <!-- Utilisation du filtre de date pour formater la date -->
+                                    <td>Montant : {{ payment.amount|floatformat:2 }} GNF</td> <!-- Utilisation du filtre floatformat pour formater le montant avec deux décimales -->
+                                    <td>Mode de paiement : {{ payment.payment_method }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="3">Aucun paiement n'a été effectué pour cette facture.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+                
+              </div>
+          </div>
+      </div>
+      
+      </div>
+    <h1></h1>
+  
+    
+    {% endblock %}
+
+    <!-- Specific Page JS goes HERE -->
+    {% block javascripts %}
+    {% endblock %}
+    
+
+
+

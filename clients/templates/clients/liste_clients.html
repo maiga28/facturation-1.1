@@ -1,0 +1,74 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card">
+          <div class="card-header">
+              <h5 class="title">Recherche de clients</h5>
+          </div>
+          <div class="card-body">
+              <form method="get" action="{% url 'clients:liste_clients' %}">
+                  <div class="form-group">
+                      <label for="search_query">Rechercher un client :</label>
+                      <input type="text" class="form-control" id="search_query" name="name" placeholder="name, email, téléphone...">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Rechercher</button>
+              </form>
+          </div>
+        </div>
+        <div class="card-header">
+          <h4 class="card-title">Liste des Clients</h4>
+        </div>
+        <div class="card-body">
+          <div class="card-header flex-column">
+            <h4 class="card-title">Liste des Clients</h4>
+            <a href="{% url 'clients:ajouter_client' %}" class="btn btn-primary">Ajouter un client</a>
+            <a href="{% url 'clients:liste_clients' %}" class="btn btn-primary">liste des clients</a>
+          </div>
+          <div class="table-responsive">
+            <table class="table tablesorter">
+              <thead class="text-primary">
+                <tr>
+                  <th>Name</th>
+                  <th>Country</th>
+                  <th>City</th>
+                  <th>numero</th>
+                  <th>Email</th>
+                  <th class="text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for client in clients %}
+                <tr>
+                  <td>{{ client.name }}</td>
+                  <td>{{ client.pays }}</td>
+                  <td>{{ client.ville }}</td>
+                  <td>{{client.numero_telephone}}</td>
+                  <td>{{client.adresse_email}}</td>
+                  <td class="text-center">
+                    <a href="{% url 'clients:modifier_client' client.pk %}"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'clients:supprimer_client' client.pk %}"><i class="fas fa-trash"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
