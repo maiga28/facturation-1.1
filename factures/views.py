@@ -7,7 +7,7 @@ from .forms import FactureForm
 
 
 
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render,HttpResponse, redirect,get_object_or_404
 from .forms import FactureForm  # Assurez-vous d'importer votre formulaire FactureForm
 from .models import Facture, LigneFacture
 from products.models import Product
@@ -61,15 +61,32 @@ def liste_factures(request):
     return render(request, 'factures/liste_facture.html', {'factures': factures})  # Assurez-vous que le nom du dossier du template est correct
 
 def facture_detail(request, pk):
-    factures = Facture.objects.get(pk=pk)  # Utilisez Facture.objects.get(pk=...) pour obtenir la factures
-    total = factures.calculer_total()  
-    payments = factures.payments.all()  # Récupérer les paiements associés à cette factures
+    facture = Facture.objects.get(pk=pk)
+    lignes_facture = LigneFacture.objects.filter(facture=facture)
+    total = facture.calculer_total()
+    totals = int(total)
+    total_produits = sum(ligne_facture.sous_total for ligne_facture in lignes_facture)
+    prix_produits = []
+    for ligne_facture in lignes_facture:
+        prix_produit = ligne_facture.produit.price  # Assurez-vous que 'price' est le nom correct du champ dans votre modèle Product
+        prix_produits.append(prix_produit)
+    quantite = []
+    for ligne_facture in lignes_facture:
+        quantite = ligne_facture.quantite
+    facture = Facture.objects.get(pk=pk)  
+    statut_facture = facture.statut
     context = {
-        'factures':factures,
-        'total':total,
-        'payments':payments
+        'facture': facture,
+        'total_produits': total_produits,
+        'payments': facture.payments.all(),
+        'produits': Product.objects.all(),
+        'prix_produits': prix_produits,
+        'quantite': quantite,
+        'statut_facture': statut_facture
     }
+
     return render(request, 'factures/facture_detail.html', context)
+
 
 def modifier_facture(request, pk):
     factures = get_object_or_404(Facture, pk=pk)
