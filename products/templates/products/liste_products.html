@@ -1,0 +1,65 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">    <div class="card">
+        <div class="card-header">
+            <h5 class="title">Recherche des produits</h5>
+        </div>
+        <div class="card-body">
+            <form method="get" action="{% url 'products:liste_products' %}">
+                <div class="form-group">
+                    <label for="search_query">Rechercher un produit :</label>
+                    <input type="text" class="form-control" id="search_query" name="title" placeholder="nom, categorie...">
+                </div>
+                <button type="submit" class="btn btn-primary adjustments-line ">Rechercher</button>
+            </form>
+        </div>
+      </div>
+  <h1 class=" text-sm-center text-center">Liste des Produits</h1>
+  <div class="card-header text-center flex-column">
+    <h4 class="card-title">Liste des produits</h4>
+    <a href="{% url 'products:nouveau_produit' %}" class="btn btn-primary">Ajouter un produit</a>
+
+    <a href="{% url 'products:liste_products' %}" class="btn btn-primary">Liste des produits</a>
+  </div>  
+  <table class="table table-flush">
+    <thead class="thead-light">
+      <tr>
+        <th>Produit</th>
+        <th>Catégorie</th>
+        <th>Description</th>
+        <th>Prix</th>
+        <th>Quantité en Stock</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+        <tr>
+          <td>{{ product.title }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.stock_quantity }}</td>
+          <td class="text-center">
+            <a href="{% url 'products:modifier_products' pk=product.pk %}">Modifier<i class="fas fa-edit"></i></a>
+            <a href="{% url 'products:supprimer_products' pk=product.pk %}"><i class="fas fa-trash"></i></a>
+
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endblock content %}
+
+  <!-- Specific Page JS goes HERE  -->
+  {% block javascripts %}{% endblock javascripts %}
+  

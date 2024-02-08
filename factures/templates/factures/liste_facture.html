@@ -1,0 +1,84 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card">
+          <div class="card-header">
+              <h5 class="title">Recherche de factures</h5>
+          </div>
+          <div class="card-body">
+              <form method="get" action="{% url 'factures:liste_factures' %}">
+                  <div class="form-group">
+                      <label for="search_query">Rechercher une facture :</label>
+                      <input type="text" class="form-control" id="search_query" name="name" placeholder="name, email, téléphone...">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Rechercher</button>
+              </form>
+          </div>
+        </div>
+        <div class="card-header">
+          <h4 class="card-title">Liste des factures</h4>
+        </div>
+        <div class="card-body">
+          <div class="card-header flex-column">
+            <h4 class="card-title">Liste des factures</h4>
+            <a href="{% url 'factures:creer_facture' %}" class="btn btn-primary">Ajouter une facture</a>
+            <a href="{% url 'factures:liste_factures' %}" class="btn btn-primary">liste des factures</a>
+          </div>
+          <div class="table-responsive">
+            <table class="table tablesorter">
+              <thead class="text-primary">
+                <table class="table">
+                  <thead>
+                      <tr>
+                          <th>Numéro de facture</th>
+                          <th>Date d'émission</th>
+                          <th>Client</th>
+                          <th>Montant total</th>
+                          <th>Statut</th>
+                          <th>Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for facture in factures %}
+                    <tr>
+                        <td>{{ facture.numero }}</td>
+                        <td>{{ facture.date_emission }}</td>
+                        <td>{{ facture.client.name }}</td>
+                        <td>{{ facture.montant_total }}</td>
+                        <td>{{ facture.statut }}</td>
+                        <td>
+                            <a href="{% url 'factures:facture_detail' pk=facture.pk %}">Détails</a>
+                            <a href="{% url 'payment:make_payment' pk=facture.pk %}">Payment</a>
+                            <a href="{% url 'factures:facture_detail' pk=facture.pk %}">Supprimer</a>
+                            <a href="{% url 'factures:facture_detail' pk=facture.pk %}">Supprimer</a>
+                            <a href="{% url 'factures:facture_detail' pk=facture.pk %}">Voir la facture</a>
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+              </table>
+              
+            
+          </table>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

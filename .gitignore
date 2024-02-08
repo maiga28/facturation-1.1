@@ -1,0 +1,57 @@
+# byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# tests and coverage
+*.pytest_cache
+.coverage
+
+# database & logs
+*.db
+*.sqlite3
+*.log
+nginx
+# venv
+env
+myenv
+
+# other
+.DS_Store
+
+# javascript
+package-lock.json
+
+staticfiles/*
+!staticfiles/.gitkeep 
+.vscode/symbols.json
+
+apps/static/assets/node_modules
+apps/static/assets/yarn.lock
+apps/static/assets/.temp
+
+# Fichiers système et fichiers cachés
+.DS_Store
+Thumbs.db
+
+# Fichiers d'environnement
+.env
+.env.local
+
+# Dossiers de dépendances
+node_modules/
+venv/
+__pycache__/
+
+# Fichiers spécifiques aux éditeurs
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Fichiers de logs
+*.log
+
+# Dossiers de production/statiques
+staticfiles/
+media/
+
+

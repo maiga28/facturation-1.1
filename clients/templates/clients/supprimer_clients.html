@@ -1,0 +1,36 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Confirmation de Suppression</h5>
+        </div>
+        <div class="card-body">
+          <p>Êtes-vous sûr de vouloir supprimer le client "{{ client.name }}" ?</p>
+        </div>
+        <div class="card-footer">
+          <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-fill btn-danger">Confirmer la Suppression</button>
+            <a href="{% url 'clients:supprimer_client' client.pk %}" class="btn btn-default">Annuler</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- ... Votre colonne de détails de l'utilisateur ... -->
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

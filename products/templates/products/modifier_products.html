@@ -1,0 +1,80 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Ajout d'un produit</h5>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-6 pr-md-1">
+                <div class="form-group">
+                  <label>Nom du produits</label>
+                  <input type="text" class="form-control" name="title" placeholder="Nom du client">
+                </div>
+              </div>
+              <div class="col-md-6 pl-md-1">
+                <div class="form-group">
+                  <label>Categorie</label>
+                  <input type="text" class="form-control" name="category" placeholder="category">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-md-1">
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea rows="4" cols="80" class="form-control" name="description" placeholder="description"></textarea>
+                </div>
+              </div>
+              <div class="col-md-6 pl-md-1">
+                <div class="form-group">
+                  <label>Slug</label>
+                  <input type="text" class="form-control" name="slug" placeholder="Slug">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-md-1">
+                <div class="form-group">
+                  <label>Rrix</label>
+                  <input type="text" class="form-control" name="price" placeholder="Prix du produit">
+                </div>
+              </div>
+              <div class="col-md-6 px-md-1">
+                <div class="form-group">
+                  <label>Quantite</label>
+                  <input type="text" class="form-control" name="stock_quantity" placeholder="Quantite">
+                </div>
+              </div>
+            </div>
+            <div class="col-12 bg-danger">
+              <p>{{ form.errors }}</p>
+            </div>
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-fill btn-primary">Enregistrer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- ... Votre colonne de détails de l'utilisateur ... -->
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,194 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}
+  {{payment.id}}
+{% endblock %}
+
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <div class="container-fluid p-0 ">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="page_title_box d-flex align-items-center justify-content-between">
+                    <div class="page_title_left">
+                        <h3 class="f_s_30 f_w_700 dark_text">Invoice</h3>
+                    </div>
+                    <a href="#" class="white_btn3">Print</a>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-12 QA_section">
+                <div class="card QA_table ">
+                    <div class="card-header">
+                        Invoice
+                        <strong>15/08/2020</strong>
+                        <span class="float-end"> <strong>Status:</strong> Pending</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-sm-6">
+                                <h6 class="mb-3">From:</h6>
+                                <div>
+                                    <strong>Person 1</strong>
+                                </div>
+                                <div>England</div>
+                                <div>71-101 Szczecin, England</div>
+                                <div>Email: <a href="https://demo.dashboardpack.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="385c5d5557785f55595154165b5755">[email&#160;protected]</a></div>
+                                <div>Phone: +0000</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6 class="mb-3">To:</h6>
+                                <div>
+                                    <strong>Person 2</strong>
+                                </div>
+                                <div>England</div>
+                                <div>71-101 Szczecin, England</div>
+                                <div>Email: <a href="https://demo.dashboardpack.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8aeeefe7e5caede7ebe3e6a4e9e5e7">[email&#160;protected]</a></div>
+                                <div>Phone: +0000</div>
+                            </div>
+                        </div>
+                        <div class="table-responsive-sm">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="center">#</th>
+                                        <th>Produit</th>
+                                        <th>Prix Unitaire</th>
+                                        <th class="right">Prix Unitaire</th>
+                                        <th class="right">Statut</th>
+                                        <th class="center">Quantité</th>
+                                        <th class="right">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="center">{{ facture.numero }}</td>
+                                        <td class="left">
+                                            {% for ligne_facture in facture.lignefacture_set.all %}
+                                                {{ ligne_facture.produit.title }}<br> <!-- Remplacez 'title' par le champ approprié de votre modèle Product -->
+                                            {% empty %}
+                                                Aucun produit
+                                            {% endfor %}
+                                        </td>
+                                        <td class="left"> <!-- Remplacez 'description' par le champ approprié de votre modèle Facture -->
+                                            {% for prix_unitaire_produit in prix_produits %}
+                                                Prix du produit : {{ prix_unitaire_produit }}<br>
+                                            {% empty %}
+                                                Aucun produit associé à la facture.
+                                            {% endfor %}
+                                        </td>
+                                        <td class="right">Prix du produit :
+                                            {% for prix_produit in prix_produits %}
+                                            {{ prix_produit|floatformat:0 }}
+                                        {% endfor %}</td> 
+                                        <td class="right">{{ statut_facture }}</td> 
+                                        <td class="center">{{ quantites }}</td> 
+                                        <td class="right">{{ total_produits }}</td>
+                                    </tr>
+                                </tbody>
+                                <table class="table table-clear QA_table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="left">
+                                                <strong>Remise </strong>
+                                            </td>
+                                            <td class="right">{{ facture.remise }} GNF</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="left">
+                                                <strong>VAT (10%)</strong>
+                                            </td>
+                                            <td class="right">$679,76</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="left">
+                                                <strong>Total</strong>
+                                            </td>
+                                            <td class="right">
+                                                <strong>{{ facture.montant_total }} GNF</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </table>
+                            
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-5">
+                            </div>
+                            <div class="col-lg-4 col-sm-5 ms-auto QA_section">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Détails de la Facture</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+                <table class="table tablesorter">
+                    <thead class="text-primary">
+                        <tr>
+                            <th>Numéro de facture</th>
+                            <th>Date d'émission</th>
+                            <th>Client</th>
+                            <th>Remise</th>
+                            <th class="text-center">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Facture # {{ facture.numero }}</td>
+                            <td>{{ facture.date_emission }}</td>
+                            <td>{{ facture.client.name }}</td>
+                            <td>{{ facture.remise }} GNF</td>
+                            <td class="text-center">{{ facture.montant_total }} GNF</td>
+                        </tr>
+                        {% if facture.payments.all %}
+                            {% for payment in facture.payments.all %}
+                                <tr>
+                                    <td>Date du paiement : {{ payment.date|date:"Y-m-d" }}</td>
+                                    <td>Montant : {{ payment.amount|floatformat:2 }} GNF</td>
+                                    <td>Mode de paiement : {{ payment.payment_method }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">Aucun paiement n'a été effectué pour cette facture.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+      </div>
+      
+      </div>
+    <h1></h1>
+  
+    
+    {% endblock %}
+
+    <!-- Specific Page JS goes HERE -->
+    {% block javascripts %}
+    {% endblock %}
+    
+
+
+
