@@ -55,5 +55,4 @@ L'application de gestion des factures avec Django est une solution complète pou
    ```bash
    python manage.py runserver
 # facturation-1.1
-# facturation-1.1
-# facturation-1.1
+#BY SIDI MOHAMED ALKAIROU MAIGA
